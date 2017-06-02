@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 
-namespace Mechanix.WebApi
+namespace Mechanix.Web
 {
     public static class AutofacConfig
     {
@@ -17,7 +17,7 @@ namespace Mechanix.WebApi
         private const string DataAssemblyEndName = "Data";
         private const string DefaultConnectionString = "default";
 
-        public static void Register(HttpConfiguration config)
+        public static IContainer Register(HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
 
@@ -28,6 +28,8 @@ namespace Mechanix.WebApi
             var container = builder.Build();
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            return container;
         }
 
         private static void RegisterDependencies(ContainerBuilder builder)

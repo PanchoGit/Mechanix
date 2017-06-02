@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mechanix.WebApi")]
+[assembly: AssemblyTitle("Mechanix.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("______")]
-[assembly: AssemblyProduct("Mechanix.WebApi")]
+[assembly: AssemblyProduct("Mechanix.Web")]
 [assembly: AssemblyCopyright("Copyright © ______ 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c2b08d8a-270b-4d1e-ad9e-df20ae0a4620")]
+[assembly: Guid("c3b03c8a-9a76-4306-aa50-eebbe613c36f")]
 
 // Version information for an assembly consists of the following four values:
 //

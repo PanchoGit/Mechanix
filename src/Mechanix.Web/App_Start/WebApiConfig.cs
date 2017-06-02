@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Web.Http;
 
-namespace Mechanix.WebApi
+namespace Mechanix.Web
 {
     public static class WebApiConfig
     {

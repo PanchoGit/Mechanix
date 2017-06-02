@@ -3,7 +3,7 @@ using Mechanix.Workflow.Interfaces;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace Mechanix.WebApi.Controllers
+namespace Mechanix.Web.Controllers
 {
     public class ServicesController : ApiController
     {
