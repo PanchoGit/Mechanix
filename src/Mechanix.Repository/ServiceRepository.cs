@@ -1,20 +1,19 @@
-﻿using Mechanix.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using Mechanix.Domain;
+using Mechanix.Repository.Interfaces;
 
 namespace Mechanix.Repository
 {
-    public class ServiceRepository : IServiceRepository
+    public class ServiceRepository : RepositoryBase<Service, int>, IServiceRepository
     {
-
+        public ServiceRepository(DbContext dbContext) : base(dbContext)
+        {
+        }
 
         public IEnumerable<Service> Get()
         {
-            throw new NotImplementedException();
+            return set.ToListAsync().Result;
         }
     }
 }

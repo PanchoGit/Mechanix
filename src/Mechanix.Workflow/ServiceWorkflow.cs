@@ -1,17 +1,23 @@
 ﻿using Mechanix.Domain;
+using Mechanix.Repository.Interfaces;
 using Mechanix.Workflow.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mechanix.Workflow
 {
     public class ServiceWorkflow : IServiceWorkflow
     {
+        private IServiceRepository repository;
+
+        public ServiceWorkflow(IServiceRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public List<Service> Get()
         {
-            return new List<Service>()
-            {
-                new Service{ Id=1, Name="111"}
-            };
+            return repository.Get().ToList();
         }
     }
 }

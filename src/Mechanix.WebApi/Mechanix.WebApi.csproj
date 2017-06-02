@@ -49,6 +49,12 @@
     <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Autofac.WebApi2.4.0.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -112,12 +118,20 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mechanix.Data.Entity\Mechanix.Data.Entity.csproj">
+      <Project>{A2E2828B-9A24-4A01-8360-905DCBC22153}</Project>
+      <Name>Mechanix.Data.Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mechanix.Domain\Mechanix.Domain.csproj">
       <Project>{B26A53E0-1D25-4C4C-8A1C-8A882401B3F7}</Project>
       <Name>Mechanix.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mechanix.Repository\Mechanix.Repository.csproj">
+      <Project>{4662b650-aff4-43f4-8ccd-411f2ae722e8}</Project>
+      <Name>Mechanix.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mechanix.Workflow\Mechanix.Workflow.csproj">
-      <Project>{F933AF5D-4AA8-4128-A0D7-246143571DD5}</Project>
+      <Project>{f933af5d-4aa8-4128-a0d7-246143571dd5}</Project>
       <Name>Mechanix.Workflow</Name>
     </ProjectReference>
   </ItemGroup>

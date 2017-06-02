@@ -49,6 +49,10 @@
       <Project>{B26A53E0-1D25-4C4C-8A1C-8A882401B3F7}</Project>
       <Name>Mechanix.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mechanix.Repository\Mechanix.Repository.csproj">
+      <Project>{4662B650-AFF4-43F4-8CCD-411F2AE722E8}</Project>
+      <Name>Mechanix.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
