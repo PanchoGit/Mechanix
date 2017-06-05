@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mechanix.Data.Entity.Conventions;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Mechanix.Data.Entity
             modelBuilder.HasDefaultSchema(Schema);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Add(new ForeignKeyNamingConvention());
 
             AddMappingConfigurations(modelBuilder);
         }

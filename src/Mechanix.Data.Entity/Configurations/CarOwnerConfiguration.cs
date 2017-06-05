@@ -3,9 +3,9 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Mechanix.Data.Entity.Configurations
 {
-    class ServiceConfiguration : EntityTypeConfiguration<Service>
+    class CarOwnerConfiguration : EntityTypeConfiguration<CarOwner>
     {
-        public ServiceConfiguration()
+        public CarOwnerConfiguration()
         {
         }
     }

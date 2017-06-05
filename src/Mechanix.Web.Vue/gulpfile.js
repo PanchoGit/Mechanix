@@ -12,7 +12,7 @@ $.paths = {
         css: 'app/**/*.css',
         out: 'dist',
         dist: 'dist/**/*',
-        appWebOut: '../LAGalaxy.AdminWeb/dist'
+        appWebOut: '../Mechanix.Web/dist'
     };
 
 gulp.task('webpack', function () {

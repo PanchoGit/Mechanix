@@ -5,8 +5,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: ['./app/main.js','./app/common.js'],
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    path: path.resolve(__dirname, '../Mechanix.Web/dist'),
+    publicPath: '../Mechanix.Web/dist/',
     filename: 'app.bundle.js'
   },
   resolveLoader: {
@@ -32,10 +32,6 @@ module.exports = {
         loader: 'vue-html'
       },
       {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      },
-      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url',
         query: {
@@ -45,20 +41,25 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:63312/',
-        secure: false
-      },
-    }
-  },
-  devtool: '#eval-source-map',
   plugins: [
       new CopyWebpackPlugin([
-          { from: 'lib', to: 'lib' }
+          { from: 'lib', to: 'lib' },
+          { from: 'app/i', to: 'i' },
+          { from: 'app/css', to: 'css' }
       ])
   ]
 }
+
+module.exports.plugins = (module.exports.plugins || []).concat([
+new webpack.DefinePlugin({
+    'process.env': {
+    NODE_ENV: '"production"'
+    }
+}),
+new webpack.optimize.UglifyJsPlugin({
+    compress: {
+    warnings: false
+    }
+}),
+new webpack.optimize.OccurenceOrderPlugin()
+])

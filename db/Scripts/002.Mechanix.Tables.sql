@@ -9,10 +9,13 @@ BEGIN
 	    [Id] INT IDENTITY (1, 1) NOT NULL,
 	    [Brand] NVARCHAR(255),
 	    [Year] INT,
-	    [Patent] INT,
+	    [Patent] NVARCHAR(100),
+	    [OwnerId] INT NOT NULL,
 		[Created] [DATETIME] NULL CONSTRAINT [DF_Car_Created] DEFAULT (GETUTCDATE()),
 		[Modified] [DATETIME],
-	    CONSTRAINT [PK_Car] PRIMARY KEY CLUSTERED ([Id] ASC)
+	    CONSTRAINT [PK_Car] PRIMARY KEY CLUSTERED ([Id] ASC),
+		CONSTRAINT [UQ_Car_Patent] UNIQUE (Patent),
+		CONSTRAINT [FK_Car_OwnerId] FOREIGN KEY (OwnerId) REFERENCES app.Owner(Id),
 	);
 END
 
@@ -32,23 +35,6 @@ END
 
 IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
 				 WHERE TABLE_SCHEMA = 'app' 
-                 AND  TABLE_NAME = 'CarOwner'))
-BEGIN
-	CREATE TABLE app.CarOwner (
-	    [Id] INT IDENTITY (1, 1) NOT NULL,
-	    [OwnerId] INT NOT NULL,
-	    [CarId] INT NOT NULL,
-		[Created] [DATETIME] NULL CONSTRAINT [DF_CarOwner_Created] DEFAULT (GETUTCDATE()),
-		[Modified] [DATETIME],
-	    CONSTRAINT [PK_CarOwner] PRIMARY KEY CLUSTERED ([Id] ASC),
-	    CONSTRAINT [UQ_CarOwner_OwnerCar] UNIQUE (OwnerId, CarId),
-		CONSTRAINT [FK_CarOwner_OwnerId] FOREIGN KEY (OwnerId) REFERENCES app.Owner(Id),
-		CONSTRAINT [FK_CarOwner_CarId] FOREIGN KEY (CarId) REFERENCES app.Car(Id),
-	);
-END
-
-IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
-				 WHERE TABLE_SCHEMA = 'app' 
                  AND  TABLE_NAME = 'Service'))
 BEGIN
 	CREATE TABLE app.Service (
@@ -61,30 +47,16 @@ END
 
 IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'app' 
-                 AND  TABLE_NAME = 'Order'))
+                 AND  TABLE_NAME = 'CarService'))
 BEGIN
-	CREATE TABLE app.[Order] (
+	CREATE TABLE app.CarService (
 	    [Id] INT IDENTITY (1, 1) NOT NULL,
 	    [CarId] INT NOT NULL,
-	    [Date] DATE NULL,
-		[Created] [DATETIME] NULL CONSTRAINT [DF_Order_Created] DEFAULT (GETUTCDATE()),
-		[Modified] [DATETIME],
-	    CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED ([Id] ASC),
-	    CONSTRAINT [FK_Order_Car] FOREIGN KEY (CarId) REFERENCES app.Car(Id)
-	);
-END
-
-IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
-                 WHERE TABLE_SCHEMA = 'app' 
-                 AND  TABLE_NAME = 'OrderService'))
-BEGIN
-	CREATE TABLE app.OrderService (
-	    [Id] INT IDENTITY (1, 1) NOT NULL,
-	    [OrderId] INT NOT NULL,
 	    [ServiceId] INT NOT NULL,
-		[Created] [DATETIME] NULL CONSTRAINT [DF_OrderService_Created] DEFAULT (GETUTCDATE()),
+		[Date] [DATETIME] NOT NULL,
+		[Created] [DATETIME] NULL CONSTRAINT [DF_CarService_Created] DEFAULT (GETUTCDATE()),
 		[Modified] [DATETIME],
-	    CONSTRAINT [PK_OrderService] PRIMARY KEY CLUSTERED ([Id] ASC),
-	    CONSTRAINT [UQ_OrderService_OrderService] UNIQUE (OrderId, ServiceId)
+	    CONSTRAINT [PK_CarService] PRIMARY KEY CLUSTERED ([Id] ASC),
+	    CONSTRAINT [UQ_CarService_CarService] UNIQUE (CarId, ServiceId)
 	);
 END

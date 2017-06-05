@@ -1,14 +1,9 @@
 {
-  "name": "mechanix.vue",
+  "name": "Mechanix",
   "version": "1.0.0",
-  "description": "Mechanix Frontend",
-  "main": "index.js",
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "webpack": "^2.6.1"
-  },
+  "description": "Mechanix",
   "author": "Pancho",
-  "license": "ISC",
+  "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --content-base app/",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules -p --config ./webpack.config.production.js"
@@ -20,7 +15,9 @@
     "copy-webpack-plugin": "^4.0.1",
     "gulp": "^3.9.1",
     "gulp-watch": "^4.3.11",
-    "object-assign": "^4.1.1"
+    "object-assign": "^4.1.1",
+    "vue": "^1.0.0",
+    "vue-select": "github:sagalbot/vue-select"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -40,6 +37,12 @@
     "json-loader": "^0.5.4",
     "page": "^1.7.1",
     "url-loader": "^0.5.7",
+    "vue-hot-reload-api": "^1.2.0",
+    "vue-html-loader": "^1.0.0",
+    "vue-loader": "^8.2.1",
+    "vue-resource": "^0.8.0",
+    "vue-strap": "^1.0.11",
+    "vue-style-loader": "^1.0.0",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.12.0",
     "webpack-stream": "^3.2.0"

@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarWorkflow.cs" />
+    <Compile Include="Interfaces\ICarWorkflow.cs" />
+    <Compile Include="Interfaces\IOwnerWorkflow.cs" />
     <Compile Include="Interfaces\IServiceWorkflow.cs" />
+    <Compile Include="OwnerWorkflow.cs" />
     <Compile Include="ServiceWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

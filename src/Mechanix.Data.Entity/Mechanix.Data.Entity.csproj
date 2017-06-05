@@ -47,7 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\CarConfiguration.cs" />
+    <Compile Include="Configurations\CarOwnerConfiguration.cs" />
+    <Compile Include="Configurations\OwnerConfiguration.cs" />
     <Compile Include="Configurations\ServiceConfiguration.cs" />
+    <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
     <Compile Include="MechanixContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
