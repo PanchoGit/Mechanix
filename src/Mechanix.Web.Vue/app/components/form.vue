@@ -39,18 +39,12 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="service">Servicios</label>
-      <div class="col-sm-10 input-group">
-        <span class="input-addon"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span>
-        <select v-model="car.service" class="input-with-addon" id="service" name="service" style="width: 300px">
-          <option disabled value=""></option>
-          <option v-for="option in services" v-bind:value="option.id">
-            {{ option.name }}
-          </option>
-        </select>
-      </div>
+        <div class="col-sm-10 input-group">
+          <v-select class="inputVSelect" style="width:355px" :value.sync="selectedServices" :options="services" options-value="id" options-label="name" multiple name="service" search justified clear-button close-on-select placeholder=" &nbsp; "></v-select>
+        </div>
     </div>
     <div class="form-group">
-      <button type="submit" name="" class="button">Guardar</button>
+      <button type="submit" name="" class="button" :disabled="submited">Guardar</button>
     </div>
   </form>
 
@@ -63,9 +57,29 @@
   dismissable>
   <span class="icon-info-circled alert-icon-float-left"></span>
   <div style="text-align:left">
+    <div v-show="!validation.brand">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Brand cannot be empty.
+    </div>
+    <div v-show="!validation.year">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Year cannot be empty.
+    </div>
+    <div v-show="!validation.patent">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Patent cannot be empty.
+    </div>
     <div v-show="!validation.service">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       Service cannot be empty.
+    </div>
+    <div v-show="!validation.ownerFirstName">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Owner first name cannot be empty.
+    </div>
+    <div v-show="!validation.ownerLastName">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Owner last name cannot be empty.
     </div>
   </div>
 </alert>
@@ -82,9 +96,16 @@
     <div>
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <strong>{{ errorMessage.error }}</strong>
-      <p>{{ errorMessage.error_description }}</p>
+      <div v-html="errorMessage.description"></p>
     </div>
   </div>
+</alert>
+
+
+<alert :show.sync="submited" placement="top-right" duration="3000" type="success" width="400px" dismissable>
+  <span class="icon-ok-circled alert-icon-float-left"></span>
+  <strong>Well Done!</strong>
+  <p>You successfully read this important alert message.</p>
 </alert>
 
 <modal title="Propietario" :show.sync="showOwnerModal" effect="zoom" width="400" ok-text="Guardar" cancel-text="Cancelar" :backdrop='false' :callback="newOwnerModalHandler">
@@ -123,6 +144,7 @@ import serviceService from '../services/serviceService'
 import ownerService from '../services/ownerService'
 import carService from '../services/carService'
 import {modal as Modal} from 'vue-strap'
+import {select as vSelect} from 'vue-strap'
 
 export default {
   data () {
@@ -133,24 +155,30 @@ export default {
         brand: '',
         year: '',
         patent: '',
-        owner: {},
-        service: ''
+        owner: {
+          firstName: '',
+          lastName: ''
+        },
+        services: []
       },
       newOwner: {
-        id:0,
-        firstName:'',
-        lastName:''
+        id: 0,
+        firstName: '',
+        lastName: ''
       },
+      selectedServices: [],
       showValidateAlert: false,
       showErrorAlert: false,
       showOwnerModal: false,
       currentViewName: 'form',
-      errorMessage: { error:'', error_description:''}
+      errorMessage: { error:'', description:''},
+      submited: false
     }
   },
   components: {
     Alert,
-    Modal
+    Modal,
+    vSelect
   },
   ready: function () {
     this.init();
@@ -158,6 +186,12 @@ export default {
   computed: {
     validation: function () {
       return {
+        brand: !!this.car.brand.trim(),
+        year: !!this.car.year.trim(),
+        patent: !!this.car.patent.trim(),
+        service: !!this.car.services.length > 0,
+        ownerFirstName: !!this.car.owner.firstName.trim(),
+        ownerLastName: !!this.car.owner.lastName.trim()
       }
     },
     isValid: function () {
@@ -196,13 +230,48 @@ export default {
       alert("ok");
     },
     errorHandler: function(result){
-      if(result.ok) return false;
-      this.errorMessage = { error:result.data.message, error_description:result.data.exceptionMessage};
+      if(result.data.status == undefined && result.ok) return false;
+      if(result.data.status == "OK") return false;
+      this.errorMessage = this.translateError(result.data);
       this.showErrorAlert = true;
       return true;
     },
+    translateError: function(data){
+      var message = "Error";
+      var description = "";
+
+      if(data.status == undefined)
+      {
+        message = data.message ? data.message : message;
+        description = data.exceptionMessage ? data.exceptionMessage : data;
+      } 
+
+      if(data.status != undefined && data.status == "ERROR")
+      {
+        message = "Error";
+        for(var item in data.errors){
+          var errorItem = data.errors[item];
+          description += "<li>"+ errorItem.errorMessage + "</li>";
+        }
+      }
+
+      return {error:message, description:description};
+    },
     save: function(){
-      carService.post(this, this.car, this.saveResponseHandler)
+      this.setSelectedServices();
+      //if(!this.isValid) {
+        //this.showValidateAlert = true;
+        //return;
+      //}
+      //this.submited = true;
+      carService.post(this, this.car, this.saveResponseHandler);
+    },
+    setSelectedServices: function(){
+      var list = [];
+      for(var index in this.selectedServices){
+        list.push({id:this.selectedServices[index]});
+      }
+      this.car.services = list;
     },
     newOwnerClickHandler: function(){
       this.car.owner = null;

@@ -214,7 +214,7 @@ h2 {
 	color:#DEDEDE;
 	background-color:rgba(164, 164, 164, 0.7);
 }
-select, input, .input-addon {
+select, input, .input-addon, .inputVSelect button {
 	font-size:20px; 
 	background-color:#efefef;
 	background:rgba(0,0,0,.1); 
@@ -235,7 +235,7 @@ select, input, .input-addon {
 	transition-duration: 1s;
 	transition-timing-function: ease;
 }
-select:hover, input:hover {
+select:hover, input:hover, .inputVSelect button:hover {
     border: solid 1px #9ecaed;
     -webkit-transition-duration: 0.8s;
     -moz-transition-duration: 0.8s;
@@ -248,7 +248,7 @@ select:hover, input:hover {
     -o-transition-timing-function: ease;
     transition-timing-function: ease;
 }
-select:focus, input:focus {
+select:focus, input:focus, .inputVSelect button:focus {
     outline: none;
 	border: solid 1px #9ecaed;
 	-webkit-box-shadow: 0px 1px 6px 1px #9ecaed;
@@ -276,6 +276,11 @@ select:focus, input:focus {
 .input-with-addon {
 	border-radius:0px 10px 10px 0px;
 }
+.inputVSelect button {
+	border-radius:10px 10px 10px 10px !important;
+	font-size:14px !important;
+} 
+
 .scale1 {
     -ms-transform: scale(1,1); /* IE 9 */
     -webkit-transform: scale(1,1); /* Safari */
