@@ -1,5 +1,6 @@
 ﻿using Mechanix.Domain;
 using Mechanix.Workflow.Interfaces;
+using Mechanix.Web.Extensions;
 using System.Web.Http;
 
 namespace Mechanix.Web.Controllers
@@ -13,9 +14,11 @@ namespace Mechanix.Web.Controllers
             this.workflow = workflow;
         }
 
-        public Car Post(Car model)
+        public IHttpActionResult Post(Car model)
         {
-            return workflow.Create(model);
+            var result = workflow.Create(model);
+
+            return result.CreateResponse(this);
         }
     }
 }

@@ -1,42 +1,97 @@
 ﻿using Mechanix.Workflow.Interfaces;
 using Mechanix.Domain;
 using Mechanix.Repository.Interfaces;
+using System.Collections.Generic;
+using Mechanix.Common;
+using Mechanix.Workflow.Resources;
+using System.Linq;
 
 namespace Mechanix.Workflow
 {
     public class CarWorkflow : ICarWorkflow
     {
         private ICarRepository carRepository;
-        private ICarOwnerRepository carOwnerrepository;
+        private ICarOwnerRepository carOwnerRepository;
+        private ICarServiceRepository carServiceRepository;
 
-        public CarWorkflow(ICarRepository carRepository, ICarOwnerRepository carOwnerrepository)
+        public CarWorkflow(ICarRepository carRepository, ICarOwnerRepository carOwnerRepository, ICarServiceRepository carServiceRepository)
         {
             this.carRepository = carRepository;
-            this.carOwnerrepository = carOwnerrepository;
+            this.carOwnerRepository = carOwnerRepository;
+            this.carServiceRepository = carServiceRepository;
         }
 
-        public Car Create(Car car)
+        public Result Create(Car car)
         {
+            var result = ValidateCreate(car);
+
+            if (result.HasErrors) return result;
+
             carRepository.Create(car);
 
-            SetOwner(car);
+            SetCarService(car);
 
-            return car;
+            return new Result<Car>(car);
         }
 
-        private void SetOwner(Car car)
+        private void SetCarService(Car car)
         {
-            var owner = car.Owner;
+            var services = car.Services;
 
-            if (owner == null || owner.Id != 0) return;
+            if (services == null) return;
 
-            var carOwner = new CarOwner
+            var carServices = new List<CarService>();
+
+            foreach (var item in services)
             {
-                CarId = car.Id,
-                OwnerId = owner.Id
-            };
+                carServices.Add(new CarService {
+                    CarId = car.Id,
+                    ServiceId = item.Id,
+                    Date = System.DateTime.UtcNow
+                });
+            }
+            carServiceRepository.Create(carServices);
+        }
 
-            carOwnerrepository.Create(carOwner);
+        private Result<Car> ValidateCreate(Car car)
+        {
+            var result = new Result<Car>();
+
+            car.Brand = car.Brand?.Trim();
+            if (string.IsNullOrWhiteSpace(car.Brand))
+            {
+                result.AddError(MessageResource.Car_NoBrand, nameof(MessageResource.Car_NoBrand), nameof(car.Brand));
+            }
+
+            if (car.Year == 0)
+            {
+                result.AddError(MessageResource.Car_NoYear, nameof(MessageResource.Car_NoYear), nameof(car.Year));
+            }
+
+            car.Patent = car.Patent?.Trim();
+            if (string.IsNullOrWhiteSpace(car.Patent))
+            {
+                result.AddError(MessageResource.Car_NoPatent, nameof(MessageResource.Car_NoPatent), nameof(car.Patent));
+            }
+
+            car.Owner.FirstName = car.Owner.FirstName?.Trim();
+            if (string.IsNullOrWhiteSpace(car.Owner.FirstName))
+            {
+                result.AddError(MessageResource.Car_NoOwnerFirstName, nameof(MessageResource.Car_NoOwnerFirstName), nameof(car.Owner.FirstName));
+            }
+
+            car.Owner.LastName = car.Owner.LastName?.Trim();
+            if (string.IsNullOrWhiteSpace(car.Owner.LastName))
+            {
+                result.AddError(MessageResource.Car_NoOwnerLastName, nameof(MessageResource.Car_NoOwnerLastName), nameof(car.Owner.LastName));
+            }
+
+            if (!car.Services.Any())
+            {
+                result.AddError(MessageResource.Car_NoService, nameof(MessageResource.Car_NoService), nameof(car.Services));
+            }
+
+            return result;
         }
     }
 }

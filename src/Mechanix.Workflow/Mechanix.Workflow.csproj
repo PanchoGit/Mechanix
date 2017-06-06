@@ -45,10 +45,19 @@
     <Compile Include="Interfaces\IOwnerWorkflow.cs" />
     <Compile Include="Interfaces\IServiceWorkflow.cs" />
     <Compile Include="OwnerWorkflow.cs" />
+    <Compile Include="Resources\MessageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessageResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mechanix.Common\Mechanix.Common.csproj">
+      <Project>{A877F449-89DB-4863-A851-F4D8828AB734}</Project>
+      <Name>Mechanix.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mechanix.Domain\Mechanix.Domain.csproj">
       <Project>{B26A53E0-1D25-4C4C-8A1C-8A882401B3F7}</Project>
       <Name>Mechanix.Domain</Name>
@@ -57,6 +66,12 @@
       <Project>{4662B650-AFF4-43F4-8CCD-411F2AE722E8}</Project>
       <Name>Mechanix.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MessageResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

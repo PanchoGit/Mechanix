@@ -155,12 +155,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CarsController.cs" />
+    <Compile Include="Controllers\Filters\GlobalExceptionHandler.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Extensions\ResultExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DomainActionResult.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\StatusType.cs" />
+    <Compile Include="Models\UnhandledExceptionActionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -183,9 +189,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mechanix.Common\Mechanix.Common.csproj">
+      <Project>{A877F449-89DB-4863-A851-F4D8828AB734}</Project>
+      <Name>Mechanix.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mechanix.Data.Entity\Mechanix.Data.Entity.csproj">
       <Project>{a2e2828b-9a24-4a01-8360-905dcbc22153}</Project>
       <Name>Mechanix.Data.Entity</Name>

@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanix.Data.Entity", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanix.Web", "src\Mechanix.Web\Mechanix.Web.csproj", "{C3B03C8A-9A76-4306-AA50-EEBBE613C36F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Common", "0.Common", "{0EC64D80-3A33-4488-8C17-D1E71D8D7779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanix.Common", "src\Mechanix.Common\Mechanix.Common.csproj", "{A877F449-89DB-4863-A851-F4D8828AB734}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{C3B03C8A-9A76-4306-AA50-EEBBE613C36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B03C8A-9A76-4306-AA50-EEBBE613C36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B03C8A-9A76-4306-AA50-EEBBE613C36F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A877F449-89DB-4863-A851-F4D8828AB734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A877F449-89DB-4863-A851-F4D8828AB734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A877F449-89DB-4863-A851-F4D8828AB734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A877F449-89DB-4863-A851-F4D8828AB734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,5 +67,6 @@ Global
 		{4662B650-AFF4-43F4-8CCD-411F2AE722E8} = {DD111A17-D28C-49B4-A6F0-7CC87A094F14}
 		{A2E2828B-9A24-4A01-8360-905DCBC22153} = {3D9B812D-1EB3-4683-8611-D567A1E48D50}
 		{C3B03C8A-9A76-4306-AA50-EEBBE613C36F} = {ED91C660-88D6-4AC5-8341-2EDAD2A29C6E}
+		{A877F449-89DB-4863-A851-F4D8828AB734} = {0EC64D80-3A33-4488-8C17-D1E71D8D7779}
 	EndGlobalSection
 EndGlobal

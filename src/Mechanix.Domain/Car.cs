@@ -13,5 +13,7 @@ namespace Mechanix.Domain
         public string Patent { get; set; }
 
         public virtual Owner Owner { get; set; }
+
+        public IList<Service> Services { get; set; }
     }
 }
