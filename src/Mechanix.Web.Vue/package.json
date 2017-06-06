@@ -1,0 +1,50 @@
+{
+  "name": "Mechanix",
+  "version": "1.0.0",
+  "description": "Mechanix",
+  "author": "Pancho",
+  "private": true,
+  "scripts": {
+    "dev": "webpack-dev-server --inline --hot --content-base app/",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules -p --config ./webpack.config.production.js"
+  },
+  "dependencies": {
+    "aspnet-webpack": "^1.0.28",
+    "babel-runtime": "^6.0.0",
+    "bootstrap": "^3.3.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "gulp": "^3.9.1",
+    "gulp-watch": "^4.3.11",
+    "object-assign": "^4.1.1",
+    "vue": "^1.0.0",
+    "vue-select": "github:sagalbot/vue-select"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-runtime": "^6.0.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-2": "^6.0.0",
+    "bootstrap": "^3.3.6",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^1.0.6",
+    "css-loader": "^0.23.0",
+    "del": "^2.2.1",
+    "gulp-build": "^0.5.3",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-sequence": "^0.4.5",
+    "json-loader": "^0.5.4",
+    "page": "^1.7.1",
+    "url-loader": "^0.5.7",
+    "vue-hot-reload-api": "^1.2.0",
+    "vue-html-loader": "^1.0.0",
+    "vue-loader": "^8.2.1",
+    "vue-resource": "^0.8.0",
+    "vue-strap": "^1.0.11",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.12.0",
+    "webpack-stream": "^3.2.0"
+  }
+}
