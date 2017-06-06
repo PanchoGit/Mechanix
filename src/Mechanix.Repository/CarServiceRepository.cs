@@ -9,7 +9,6 @@ namespace Mechanix.Repository
     {
         public CarServiceRepository(DbContext dbContext) : base(dbContext)
         {
-
         }
 
         public void Create(List<CarService> carServices)

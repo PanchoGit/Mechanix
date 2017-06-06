@@ -1,10 +1,11 @@
-﻿using Mechanix.Workflow.Interfaces;
+﻿using System.Linq;
+using System.Data.Entity;
+using System.Collections.Generic;
+using Mechanix.Workflow.Interfaces;
 using Mechanix.Domain;
 using Mechanix.Repository.Interfaces;
-using System.Collections.Generic;
 using Mechanix.Common;
 using Mechanix.Workflow.Resources;
-using System.Linq;
 
 namespace Mechanix.Workflow
 {
@@ -13,12 +14,17 @@ namespace Mechanix.Workflow
         private ICarRepository carRepository;
         private ICarOwnerRepository carOwnerRepository;
         private ICarServiceRepository carServiceRepository;
+        private DbContext dbContext;
 
-        public CarWorkflow(ICarRepository carRepository, ICarOwnerRepository carOwnerRepository, ICarServiceRepository carServiceRepository)
+        public CarWorkflow(ICarRepository carRepository, 
+            ICarOwnerRepository carOwnerRepository, 
+            ICarServiceRepository carServiceRepository, 
+            DbContext dbContext)
         {
             this.carRepository = carRepository;
             this.carOwnerRepository = carOwnerRepository;
             this.carServiceRepository = carServiceRepository;
+            this.dbContext = dbContext;
         }
 
         public Result Create(Car car)
@@ -27,9 +33,14 @@ namespace Mechanix.Workflow
 
             if (result.HasErrors) return result;
 
-            carRepository.Create(car);
+            using (var transaction = dbContext.Database.BeginTransaction())
+            {
+                carRepository.Create(car);
 
-            SetCarService(car);
+                SetCarService(car);
+
+                transaction.Commit();
+            }
 
             return new Result<Car>(car);
         }

@@ -7,7 +7,7 @@ namespace Mechanix.Data.Entity.Configurations
     {
         public CarConfiguration()
         {
-            //Ignore(x => x.Services);
+            Ignore(x => x.Services);
         }
     }
 }

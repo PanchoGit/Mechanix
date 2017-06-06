@@ -48,6 +48,28 @@
     </div>
   </form>
 
+<modal title="Propietario" :show.sync="showOwnerModal" effect="zoom" width="400" ok-text="Guardar" cancel-text="Cancelar" :backdrop='false' :callback="newOwnerModalHandler">
+  <div slot="modal-header" class="modal-header">
+    <b>Propietario</b>
+  </div>
+  <div slot="modal-body" class="modal-body">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="ownerFirstName">Nombre</label>
+      <div class="col-sm-10 input-group">
+        <span class="input-addon"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+        <input class="input-with-addon" id="ownerFirstName" name="ownerFirstName" style="width: 300px" v-model="newOwner.firstName" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="ownerLastName">Apellido</label>
+      <div class="col-sm-10 input-group">
+        <span class="input-addon"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+        <input class="input-with-addon" id="ownerLastName" name="ownerLastName" style="width: 300px" v-model="newOwner.lastName" />
+      </div>
+    </div>
+  </div>
+</modal>
+
 <alert
   :show.sync="showValidateAlert"
   :duration="3000"
@@ -84,6 +106,13 @@
   </div>
 </alert>
 
+<alert :show.sync="showSuccess" 
+  placement="top-right" duration="3000" type="success" width="400px" dismissable>
+  <span class="icon-ok-circled alert-icon-float-left"></span>
+  <strong>Ok</strong>
+  <p>Auto registrado correctamente.</p>
+</alert>
+
 <alert
   :show.sync="showErrorAlert"
   :duration="12000"
@@ -100,36 +129,6 @@
     </div>
   </div>
 </alert>
-
-
-<alert :show.sync="submited" placement="top-right" duration="3000" type="success" width="400px" dismissable>
-  <span class="icon-ok-circled alert-icon-float-left"></span>
-  <strong>Well Done!</strong>
-  <p>You successfully read this important alert message.</p>
-</alert>
-
-<modal title="Propietario" :show.sync="showOwnerModal" effect="zoom" width="400" ok-text="Guardar" cancel-text="Cancelar" :backdrop='false' :callback="newOwnerModalHandler">
-  <div slot="modal-header" class="modal-header">
-    <b>Propietario</b>
-  </div>
-
-  <div slot="modal-body" class="modal-body">
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="ownerFirstName">Nombre</label>
-      <div class="col-sm-10 input-group">
-        <span class="input-addon"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-        <input class="input-with-addon" id="ownerFirstName" name="ownerFirstName" style="width: 300px" v-model="newOwner.firstName" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="ownerLastName">Apellido</label>
-      <div class="col-sm-10 input-group">
-        <span class="input-addon"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-        <input class="input-with-addon" id="ownerLastName" name="ownerLastName" style="width: 300px" v-model="newOwner.lastName" />
-      </div>
-    </div>
-  </div>
-</modal>
 
 </div>
 
@@ -172,7 +171,8 @@ export default {
       showOwnerModal: false,
       currentViewName: 'form',
       errorMessage: { error:'', description:''},
-      submited: false
+      submited: false,
+      showSuccess: false
     }
   },
   components: {
@@ -226,12 +226,15 @@ export default {
     },
     saveResponseHandler: function(result){
       console.log(result);
-      if(this.errorHandler(result)) return;
-      alert("ok");
+      if(this.errorHandler(result)) {
+        this.submited = false;
+        return;
+      }
+      this.showSuccess = true;
     },
     errorHandler: function(result){
       if(result.data.status == undefined && result.ok) return false;
-      if(result.data.status == "OK") return false;
+      if(result.data.status == "SUCCESS") return false;
       this.errorMessage = this.translateError(result.data);
       this.showErrorAlert = true;
       return true;
@@ -259,11 +262,11 @@ export default {
     },
     save: function(){
       this.setSelectedServices();
-      //if(!this.isValid) {
-        //this.showValidateAlert = true;
-        //return;
-      //}
-      //this.submited = true;
+      if(!this.isValid) {
+        this.showValidateAlert = true;
+        return;
+      }
+      this.submited = true;
       carService.post(this, this.car, this.saveResponseHandler);
     },
     setSelectedServices: function(){
@@ -274,7 +277,10 @@ export default {
       this.car.services = list;
     },
     newOwnerClickHandler: function(){
-      this.car.owner = null;
+      this.car.owner = {
+        firstName: '',
+        lastName: ''
+      };
       this.showOwnerModal = true;
     },
     newOwnerModalHandler: function(){
