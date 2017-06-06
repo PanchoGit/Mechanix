@@ -7,6 +7,11 @@ namespace Mechanix.Common
     {
         public string ErrorCode { get; set; }
 
+        public ResultError() :base("error")
+        {
+
+        }
+
         public ResultError(string errorMessage)
             : base(errorMessage)
         {
