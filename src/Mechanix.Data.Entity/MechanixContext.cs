@@ -14,7 +14,6 @@ namespace Mechanix.Data.Entity
 
         public MechanixContext(string connectionString) : base(connectionString)
         {
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

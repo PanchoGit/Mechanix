@@ -20,5 +20,12 @@ namespace Mechanix.Web.Controllers
 
             return result.CreateResponse(this);
         }
+
+        public IHttpActionResult Get()
+        {
+            var result = workflow.Get();
+
+            return result.CreateResponse(this);
+        }
     }
 }

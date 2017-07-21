@@ -1,6 +1,7 @@
 ﻿using Mechanix.Repository.Interfaces;
 using Mechanix.Domain;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Mechanix.Repository
 {
@@ -8,9 +9,12 @@ namespace Mechanix.Repository
     {
         protected DbSet<Owner> Owners { get; set; }
 
+        protected DbSet<Car> Cars { get; set; }
+
         public CarRepository(DbContext dbContext) : base(dbContext)
         {
             Owners = dbContext.Set<Owner>();
+            Cars = dbContext.Set<Car>();
         }
 
         public void Create(Car car)
@@ -21,6 +25,11 @@ namespace Mechanix.Repository
             }
 
             Save(car);
+        }
+
+        public List<Car> Get()
+        {
+            return Cars.ToListAsync().Result;
         }
     }
 }

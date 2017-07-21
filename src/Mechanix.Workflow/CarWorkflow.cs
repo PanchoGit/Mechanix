@@ -6,6 +6,7 @@ using Mechanix.Domain;
 using Mechanix.Repository.Interfaces;
 using Mechanix.Common;
 using Mechanix.Workflow.Resources;
+using System;
 
 namespace Mechanix.Workflow
 {
@@ -43,6 +44,13 @@ namespace Mechanix.Workflow
             }
 
             return new Result<Car>(car);
+        }
+
+        public Result Get()
+        {
+            var cars = carRepository.Get();
+
+            return new Result<List<Car>>(cars);
         }
 
         private void SetCarService(Car car)

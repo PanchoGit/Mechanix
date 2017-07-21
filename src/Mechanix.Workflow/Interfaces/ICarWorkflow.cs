@@ -6,5 +6,7 @@ namespace Mechanix.Workflow.Interfaces
     public interface ICarWorkflow
     {
         Result Create(Car car);
+
+        Result Get();
     }
 }
